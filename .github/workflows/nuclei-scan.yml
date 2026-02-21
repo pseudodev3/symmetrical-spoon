@@ -1,0 +1,16 @@
+name: Nuclei Vulnerability Scan
+on:
+  workflow_dispatch: # Allows you to run it manually
+
+jobs:
+  nuclei-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Nuclei
+        uses: projectdiscovery/nuclei-action@v3
+        with:
+          # Replace with your server's URL
+          args: "-u https://la-vague.store/"
