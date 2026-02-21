@@ -13,4 +13,4 @@ jobs:
         uses: projectdiscovery/nuclei-action@v3
         with:
           # Replace with your server's URL
-          args: "-u https://la-vague.store/"
+          args: "-u https://la-vague.store/ -rl 50 -c 10 -mhe 5"
