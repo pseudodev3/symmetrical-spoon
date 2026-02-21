@@ -1,0 +1,21 @@
+name: OWASP ZAP Full Scan
+on:
+  workflow_dispatch: # Allows you to run it manually
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    name: Scan the web application
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          # Replace with your server's URL, or use a GitHub Secret
+          target: 'https://la-vague.store' 
+          # Automatically creates a GitHub issue with the results
+          allow_issue_writing: true 
+          # GitHub token is required to open the issue
+          token: ${{ secrets.GITHUB_TOKEN }}
