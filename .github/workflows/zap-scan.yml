@@ -1,7 +1,8 @@
 name: OWASP ZAP Full Scan
 on:
   workflow_dispatch: # Allows you to run it manually
-
+permissions:
+  issues: write
 jobs:
   zap_scan:
     runs-on: ubuntu-latest
