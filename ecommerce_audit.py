@@ -1,3 +1,5 @@
+import os
+import sys
 import requests
 import urllib3
 
@@ -66,17 +68,26 @@ def check_cookie_security(base_url):
         print(f"[!] Error checking cookies: {e}")
 
 if __name__ == "__main__":
-    print("=== Local E-commerce Vulnerability Scanner ===")
-    url = input("Enter the full URL of your local site (e.g., http://localhost:8080 or http://192.168.1.10): ").strip()
+    print("=== Automated E-commerce Vulnerability Scanner ===")
+    
+    # Fetch the URL from the environment variable provided by GitHub Actions
+    url = os.environ.get("TARGET_URL")
+    
+    if not url:
+        print("[!] TARGET_URL environment variable is missing. Exiting.")
+        sys.exit(1)
+        
+    url = url.strip()
     
     if not url.startswith("http"):
-        print("[!] Please include http:// or https:// in your URL.")
-    else:
-        # Remove trailing slash if the user added one
-        if url.endswith("/"):
-            url = url[:-1]
-            
-        check_sensitive_files(url)
-        check_http_methods(url)
-        check_cookie_security(url)
-        print("\n[*] Scan complete.")
+        print("[!] Please include http:// or https:// in your TARGET_URL secret.")
+        sys.exit(1)
+        
+    # Remove trailing slash if one exists to prevent double slashes in paths
+    if url.endswith("/"):
+        url = url[:-1]
+        
+    check_sensitive_files(url)
+    check_http_methods(url)
+    check_cookie_security(url)
+    print("\n[*] Scan complete.")
